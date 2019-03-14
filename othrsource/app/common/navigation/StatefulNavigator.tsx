@@ -12,6 +12,8 @@ interface StatefulNavigatorProps {
 @inject("navigationStore")
 @observer
 export class StatefulNavigator extends React.Component<StatefulNavigatorProps, {}> {
+  // TODO: FIXME
+    // @ts-ignore
   currentNavProp: NavigationScreenProp<NavigationState>
 
   getCurrentNavigation = () => {
@@ -20,6 +22,8 @@ export class StatefulNavigator extends React.Component<StatefulNavigatorProps, {
 
   render() {
     // grab our state & dispatch from our navigation store
+    // TODO: FIXME
+    // @ts-ignore
     const { state, dispatch, actionSubscribers } = this.props.navigationStore
 
     // create a custom navigation implementation

@@ -1,12 +1,15 @@
 import { createStackNavigator } from "react-navigation"
 import { AppNavigator } from "./AppNavigator"
+import { LoginView } from "../../onboarding"
 
 export const RootNavigator = createStackNavigator(
   {
-    appStack: { screen: AppNavigator },
+    Login: { screen: LoginView },
+    App: { screen: AppNavigator },
   },
   {
-    // headerMode: "none",
+    initialRouteName: "Login",
+    headerMode: "none",
     navigationOptions: { gesturesEnabled: false },
   },
 )

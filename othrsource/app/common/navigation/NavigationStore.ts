@@ -1,4 +1,4 @@
-import { types, IType } from "mobx-state-tree"
+import { types } from "mobx-state-tree"
 import { RootNavigator } from "./RootNavigator"
 import { NavigationActions, NavigationAction } from "react-navigation"
 import { NavigationEvents } from "./NavigationEvents"

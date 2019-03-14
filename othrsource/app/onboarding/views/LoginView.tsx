@@ -1,12 +1,27 @@
-import React, {Component} from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import React, { Component } from 'react'
+import { View, StyleSheet } from 'react-native'
+import { TextInput } from 'react-native-paper'
 
 interface Props { }
 export class LoginView extends Component<Props> {
+    state = {
+        email: '',
+        password: '',
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <Text>Login View</Text>
+                <TextInput
+                    label='Email'
+                    value={this.state.email}
+                    onChangeText={text => this.setState({ text })}
+                />
+                <TextInput
+                    label='Password'
+                    value={this.state.password}
+                    onChangeText={text => this.setState({ text })}
+                />
             </View>
         )
     }
@@ -14,9 +29,9 @@ export class LoginView extends Component<Props> {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        // flex: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center',
         backgroundColor: '#FFF',
     },
 });
