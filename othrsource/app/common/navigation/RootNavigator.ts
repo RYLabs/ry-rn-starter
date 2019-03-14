@@ -1,12 +1,12 @@
 import { createStackNavigator } from "react-navigation"
-import { ExampleNavigator } from "./example-navigator"
+import { AppNavigator } from "./AppNavigator"
 
 export const RootNavigator = createStackNavigator(
   {
-    exampleStack: { screen: ExampleNavigator },
+    appStack: { screen: AppNavigator },
   },
   {
-    headerMode: "none",
+    // headerMode: "none",
     navigationOptions: { gesturesEnabled: false },
   },
 )

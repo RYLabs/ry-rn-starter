@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
 interface Props { }
-export default class MainTabView extends Component<Props> {
+export class MainTabView extends Component<Props> {
     render() {
         return (
             <View style={styles.container}>
