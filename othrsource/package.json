@@ -1,6 +1,6 @@
 {
   "name": "othrsource",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -8,6 +8,7 @@
     "launch:android": "ENVFILE=.env react-native run-android --variant=debug",
     "bundle:android": "ENVFILE=.env.production react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "build:android": "cd android && ./gradlew assembleRelease",
+    "postversion": "react-native-version",
     "test": "jest"
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "babel-jest": "^24.5.0",
     "jest": "^24.5.0",
     "metro-react-native-babel-preset": "^0.53.0",
+    "react-native-version": "^2.6.8",
     "react-test-renderer": "16.8.3",
     "typescript": "^3.3.3333"
   },
