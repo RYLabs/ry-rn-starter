@@ -1,7 +1,8 @@
 import { ApisauceInstance, create, ApiResponse } from "apisauce"
-import { getGeneralApiProblem } from "./api-problem"
-import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
-import * as Types from "./api.types"
+import { getGeneralApiProblem } from "./APIProblem"
+import { ApiConfig, DEFAULT_API_CONFIG } from "./APIConfig"
+import { Account } from "../../data"
+import * as Types from "./types"
 
 /**
  * Manages all requests to the API.
@@ -10,8 +11,9 @@ export class Api {
   /**
    * The underlying apisauce instance which performs the requests.
    */
+  // @ts-ignore
   apisauce: ApisauceInstance
-
+  
   /**
    * Configurable options.
    */
@@ -45,42 +47,12 @@ export class Api {
   }
 
   /**
-   * Gets a list of users.
-   */
-  async getUsers(): Promise<Types.GetUsersResult> {
-    // make the api call
-    const response: ApiResponse<any> = await this.apisauce.get(`/users`)
-
-    // the typical ways to die when calling an api
-    if (!response.ok) {
-      const problem = getGeneralApiProblem(response)
-      if (problem) return problem
-    }
-
-    const convertUser = raw => {
-      return {
-        id: raw.id,
-        name: raw.name,
-      }
-    }
-
-    // transform the data into the format we are expecting
-    try {
-      const rawUsers = response.data
-      const resultUsers: Types.User[] = rawUsers.map(convertUser)
-      return { kind: "ok", users: resultUsers }
-    } catch {
-      return { kind: "bad-data" }
-    }
-  }
-
-  /**
    * Gets a single user by ID
    */
 
-  async getUser(id: string): Promise<Types.GetUserResult> {
+  async getAccount(email: string): Promise<Types.GetAccoutResult> {
     // make the api call
-    const response: ApiResponse<any> = await this.apisauce.get(`/users/${id}`)
+    const response: ApiResponse<any> = await this.apisauce.get(`/account/${email}`)
 
     // the typical ways to die when calling an api
     if (!response.ok) {
@@ -90,11 +62,14 @@ export class Api {
 
     // transform the data into the format we are expecting
     try {
-      const resultUser: Types.User = {
-        id: response.data.id,
-        name: response.data.name,
+      const result: Account = {
+        firstName: response.data.firstName,
+        lastName: response.data.lastName,
+        email: response.data.email,
+        stripeConnected: response.data.stripeConnected || false,
+        completedOnboarding: response.data.completedOnboarding || false
       }
-      return { kind: "ok", user: resultUser }
+      return { kind: "ok", account: result }
     } catch {
       return { kind: "bad-data" }
     }
