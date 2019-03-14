@@ -21,7 +21,8 @@
     "react-native-gesture-handler": "^1.1.0",
     "react-native-paper": "^2.13.0",
     "react-native-vector-icons": "^6.4.1",
-    "react-navigation": "^3.3.2"
+    "react-navigation": "^3.3.2",
+    "react-navigation-mobx-helpers": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
