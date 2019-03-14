@@ -12,7 +12,9 @@
                 "include": [
                     "NODE_ENV",
                     "ENVFILE",
-                    "API"
+                    "API_ROOT_URL",
+                    "IMAGE_ROOT_URL",
+                    "STRIPE_CONNECT_URL"
                 ]
             }
         ],
