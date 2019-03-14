@@ -4,6 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "reset": "watchman watch-del-all && rm -rf node_modules/ && yarn cache clean && yarn install && yarn start -- --reset-cache && rm -rf $TMPDIR/haste-map-react-native-packager-*",
+    "launch:android": "ENVFILE=.env react-native run-android --variant=debug",
+    "bundle:android": "ENVFILE=.env.production react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "build:android": "cd android && ./gradlew assembleRelease",
     "test": "jest"
   },
   "dependencies": {
