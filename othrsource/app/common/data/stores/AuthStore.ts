@@ -9,15 +9,15 @@ export class AuthStore {
         password: '',
     };
 
-    @action setEmail(email) {
+    @action setEmail(email: string): void {
         this.values.email = email;
     }
 
-    @action setPassword(password) {
+    @action setPassword(password: string): void {
         this.values.password = password;
     }
 
-    @action reset() {
+    @action reset() : void {
         this.values.email = '';
         this.values.password = '';
     }

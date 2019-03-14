@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 // @ts-ignore
 import { createAppContainer } from "react-navigation"
-import { StatefulNavigator } from "./common/navigation"
-import { BackButtonHandler } from "./common/navigation/BackButtonHandler"
-import { DEFAULT_NAVIGATION_CONFIG } from "./common/navigation/NavigationConfig"
-import { RootStore, AuthStore, setupRootStore } from "./common/data/stores"
+import { RootStore, AuthStore } from "./common/data/stores"
 import { RootNavigator } from "./common/navigation/RootNavigator"
 import { Provider as StoreProvider, observer } from "mobx-react"
 import { Provider as PaperProvider } from 'react-native-paper'
