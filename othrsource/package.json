@@ -15,15 +15,19 @@
     "apisauce": "^1.0.2",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "mobx": "^5.9.0",
+    "mobx-logger": "^0.7.1",
     "mobx-react": "^5.4.3",
+    "mobx-state-tree": "^3.11.0",
     "react": "16.8.3",
     "react-native": "^0.59.1",
     "react-native-config": "^0.11.7",
     "react-native-gesture-handler": "^1.1.0",
+    "react-native-keychain": "^3.1.1",
     "react-native-paper": "^2.13.0",
     "react-native-vector-icons": "^6.4.1",
     "react-navigation": "^3.3.2",
-    "react-navigation-mobx-helpers": "^2.0.1"
+    "react-navigation-mobx-helpers": "^2.0.1",
+    "validate.js": "^0.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
