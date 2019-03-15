@@ -25,6 +25,7 @@
     "react-native-elements": "^1.1.0",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-keychain": "^3.1.1",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-vector-icons": "^6.4.1",
     "react-navigation": "3.0.0",
     "react-navigation-mobx-helpers": "^2.0.1",

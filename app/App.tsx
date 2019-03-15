@@ -4,6 +4,7 @@ import { createAppContainer } from "react-navigation"
 import { RootStore, AuthStore } from "./common/data/stores"
 import { RootNavigator } from "./common/navigation/RootNavigator"
 import { Provider as StoreProvider, observer } from "mobx-react"
+import SplashScreen from 'react-native-splash-screen'
 
 const AppContainer = createAppContainer(RootNavigator);
 
@@ -20,6 +21,7 @@ export default class App extends Component<Props, AppState> {
    * re-renders when we're good to go.
    */
   async componentDidMount() {
+    SplashScreen.hide()
     // this.setState({
     //   rootStore: await setupRootStore(),
     // })
