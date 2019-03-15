@@ -4,7 +4,6 @@ import { createAppContainer } from "react-navigation"
 import { RootStore, AuthStore } from "./common/data/stores"
 import { RootNavigator } from "./common/navigation/RootNavigator"
 import { Provider as StoreProvider, observer } from "mobx-react"
-import { Provider as PaperProvider } from 'react-native-paper'
 
 const AppContainer = createAppContainer(RootNavigator);
 
@@ -62,9 +61,7 @@ export default class App extends Component<Props, AppState> {
 
     return (
       <StoreProvider rootStore={rootStore} {...otherStores}>
-        <PaperProvider>
           <AppContainer />
-        </PaperProvider>
       </StoreProvider>
     
       // <Provider rootStore={rootStore} navigationStore={rootStore.navigationStore} {...otherStores}>

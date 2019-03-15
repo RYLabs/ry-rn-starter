@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { TextInput, Button } from 'react-native-paper'
+import { Input, Button } from 'react-native-elements'
 import { inject, observer } from 'mobx-react';
 import { AuthStore } from '../../common/data/stores'
 import { StackActions, NavigationActions } from 'react-navigation';
@@ -36,19 +36,17 @@ export class LoginView extends Component<Props> {
         return (
             <View style={styles.container}>
                 <View style={styles.formContainer}>
-                    <TextInput
-                        label='Email'
+                    <Input
+                        placeholder='Email'
                         value={values.email}
                         onChangeText={text => authStore.setEmail(text)}
                     />
-                    <TextInput
-                        label='Password'
+                    <Input
+                        placeholder='Password'
                         value={values.password}
                         onChangeText={text => authStore.setPassword(text)}
                     />
-                    <Button mode="outlined" onPress={this.handleSignIn}>
-                        Sign In
-                </Button>
+                    <Button title="Sign In" onPress={this.handleSignIn} containerStyle={styles.signInButtonContainer} />
                 </View>
             </View>
         )
@@ -63,7 +61,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
     },
     formContainer: {
+        padding: 40,
         width: '100%',
         height: 'auto'
     },
+    signInButtonContainer: {
+        marginTop: 20
+    }
 });
