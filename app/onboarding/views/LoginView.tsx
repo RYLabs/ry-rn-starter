@@ -4,7 +4,8 @@ import {
     ImageBackground, 
     Image,
     Dimensions, 
-    StyleSheet 
+    StyleSheet, 
+    Alert
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { Input, Button, Text } from 'react-native-elements'
@@ -12,11 +13,12 @@ import { inject, observer } from 'mobx-react';
 import { AuthStore } from '../../common/data/stores'
 import { ThemeStore } from '../../common/theme';
 import { LinkButton } from '../../common/components'
-import { StackActions, NavigationActions } from 'react-navigation';
+// import { GenericApiError } from '../../common/services/api/APIProblem'
 
 import BackgroundImage from '../assets/images/background.png'
 import HeaderImage from '../assets/images/building5.png'
 import LogoImage from '../assets/images/logo_white.png'
+import { NavigationActions, StackActions } from 'react-navigation';
 
 
 const { width, height } = Dimensions.get('window')
@@ -36,16 +38,18 @@ export class LoginView extends Component<LoginViewProps> {
     }
 
     handleSignIn = async () => {
-        console.log('login')
         const { navigation, authStore } = this.props
-        await authStore.login()
-        console.log('login')
-        // const resetAction = StackActions.reset({
-        //     index: 0,
-        //     actions: [NavigationActions.navigate({ routeName: 'App' })],
-        // });
 
-        // navigation.dispatch(resetAction);
+        try {
+            await authStore.login()
+            const resetAction = StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'App' })],
+            });
+            navigation.dispatch(resetAction);
+        } catch(e) {
+            Alert.alert(e.title, e.message)
+        }
     }
 
     render() {

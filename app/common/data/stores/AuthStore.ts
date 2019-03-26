@@ -1,8 +1,6 @@
 import { observable, action } from 'mobx';
-import { ErrorMessageConfig } from '../../utils/message';
 import { Api } from '../../services/api';
 import { GenericApiErrorResponse, GenericApiError } from '../../services/api/APIProblem'
-import { ErrorMessages } from '../../utils/constants';
 
 enum AccountStatus {
     AccountLocked = 40101,

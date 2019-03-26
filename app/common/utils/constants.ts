@@ -1,6 +1,5 @@
 export enum KeychainConstants {
-    ServiceName = 'othrsource',
-    AccountName = 'com.othrsource.iosapp',
+    ServiceName = 'com.othrsource',
 }
 
 export enum WebUrls {
@@ -13,4 +12,11 @@ export enum ErrorMessages {
     DefaultTitle = 'Whoops.',
     DefaultMessage = 'Something went wrong somewhere in space and time.',
     TryAgainMessage = 'Something went wrong somewhere in space and time. Want to try that again?',
+}
+
+export enum StoragesKeys {
+    Email = 'email',
+    DoneTutorial = 'doneTutorial',
+    StripeAccount = 'stripeAccount',
+    MaxOpps = 'maxOpps',
 }

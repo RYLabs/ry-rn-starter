@@ -3,6 +3,9 @@ import { getGeneralApiProblem } from "./APIProblem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./APIConfig"
 import { Account } from "../../data"
 import * as Types from "./types"
+import { save, clear, saveString } from "../../utils/storage";
+import { StoragesKeys, KeychainConstants } from "../../utils/constants";
+import { setPassword, deletePassword } from "../../utils/keychain";
 
 enum Resource {
   Opportunities = 'opportunities',
@@ -59,22 +62,22 @@ export class Api {
     })
   }
 
-//   private func updateAccessToken(with json: Any) -> Bool {
-//   guard let jsonDict: [String: Any] = json as ?[String: Any], let token: String = jsonDict["token"] as ?String else { return false }
+  async updateAccessToken(username: string, json: any): Promise<boolean> {
+    const token: string = json.token
+    if(!token) return false
 
-//   NetworkManager.manager.adapter = AccessTokenAdapter(accessToken: token)
-//   NetworkManager.manager.retrier = AuthChecker()
+    await setPassword(username, token, { service: KeychainConstants.ServiceName })
+    return true
+  }
 
-//   SAMKeychain.setPassword(token, forService: KeychainConstants.serviceName, account: KeychainConstants.accountName)
+  async updateDoneTutorial(json: any): Promise<void> {
+    const doneTutorial = json.completed_onboarding
+    if(!doneTutorial) return;
 
-//   return true
-// }
-    
-//     private func updateDoneTutorial(with json: Any) {
-//   guard let jsonDict: [String: Any] = json as ?[String: Any], let doneTutorial: Bool = jsonDict["completed_onboarding"] as ?Bool else { return }
-//   Defaults[.doneTutorial] = doneTutorial
-//   return
-// }
+    await save(StoragesKeys.DoneTutorial, doneTutorial)
+
+    return;
+  }
 
   async login(email: string, password: string): Promise<Types.LoginResult> {
     const params = {
@@ -85,13 +88,22 @@ export class Api {
     const response: ApiResponse<any>  = await this.apisauce.post(Resource.Token, params)
     console.log(response)
     if (!response.ok) {
-      const problem = getLoginApiProblem(response)
+      const problem = getGeneralApiProblem(response)
       if (problem) return problem
     }
 
     const json = response.data
 
+    await this.updateDoneTutorial(json)
+    await saveString(StoragesKeys.Email, email)
+    await this.updateAccessToken(email, json)
+
     return json
+  }
+
+  async logout() {
+    await deletePassword({ service: KeychainConstants.ServiceName })
+    await clear()
   }
 
   /**
