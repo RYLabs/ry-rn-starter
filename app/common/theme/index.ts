@@ -18,8 +18,8 @@ export const colors = {
 }
 
 export const typography = {
-    primary: Platform.select({ ios: "OpenSans", android: "OpenSans" }),
-    secondary: Platform.select({ ios: "OpenSans", android: "OpenSans" }),
+    primary: Platform.select({ ios: "OpenSans-Regular", android: "OpenSans-Regular" }),
+    secondary: Platform.select({ ios: "OpenSans-Regular", android: "OpenSans-Regular" }),
     bold: Platform.select({ ios: "OpenSans-Bold", android: "OpenSans-Bold" }),
 }
 
@@ -31,6 +31,9 @@ export const theme: AppTheme = {
             borderBottomWidth: 0,
             backgroundColor: '#fff'
         },
+        labelStyle: {
+            fontFamily: typography.primary,
+        }
     },
     Button: {
         raised: true,
@@ -45,9 +48,13 @@ export const theme: AppTheme = {
         titleStyle: {
             color: '#fff',
             fontFamily: typography.bold,
-            fontWeight: '700',
-            fontStyle: 'normal',
             fontSize: 15,
+            ...Platform.select({
+                ios: {
+                    fontWeight: '700',
+                    fontStyle: 'normal',
+                }
+            }),
         }
     },
     Text: {
@@ -64,9 +71,13 @@ export const theme: AppTheme = {
         titleStyle: {
             color: colors.primary,
             fontFamily: typography.bold,
-            fontWeight: '700',
-            fontStyle: 'normal',
             fontSize: 15,
+            ...Platform.select({
+                ios: {
+                    fontWeight: '700',
+                    fontStyle: 'normal',
+                }
+            }),
         }
     }
 } as AppTheme

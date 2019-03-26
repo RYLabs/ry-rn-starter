@@ -55,7 +55,7 @@ export class Api {
   setup() {
     // construct the apisauce instance
     this.apisauce = create({
-      baseURL: this.config.url,
+      baseURL: 'https://api.othrsource.com/api' /*this.config.url*/,
       timeout: this.config.timeout,
       headers: {
         Accept: "application/json",
