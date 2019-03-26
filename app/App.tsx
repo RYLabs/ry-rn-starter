@@ -4,7 +4,9 @@ import { createAppContainer } from "react-navigation"
 import { RootStore, AuthStore } from "./common/data/stores"
 import { RootNavigator } from "./common/navigation/RootNavigator"
 import { Provider as StoreProvider, observer } from "mobx-react"
+import { ThemeProvider } from 'react-native-elements'
 import SplashScreen from 'react-native-splash-screen'
+import { ThemeStore } from './common/theme'
 
 const AppContainer = createAppContainer(RootNavigator);
 
@@ -57,13 +59,16 @@ export default class App extends Component<Props, AppState> {
 
     // --- am: begin list of stores ---
     const otherStores = {
-      authStore: new AuthStore()
+      authStore: new AuthStore(),
+      themeStore: new ThemeStore()
     }
     // --- am: end list of stores ---
 
     return (
       <StoreProvider rootStore={rootStore} {...otherStores}>
+        <ThemeProvider theme={otherStores.themeStore.theme}>
           <AppContainer />
+        </ThemeProvider>
       </StoreProvider>
     
       // <Provider rootStore={rootStore} navigationStore={rootStore.navigationStore} {...otherStores}>
