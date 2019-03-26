@@ -64,7 +64,7 @@ export class LoginView extends Component<LoginViewProps> {
                                          keyboardShouldPersistTaps="always" 
                                          style={ styles.scrollViewContainer }>
                         <View style={styles.headerContainer}>
-                            {/* <Image source={HeaderImage} style={styles.headerImage} resizeMode="contain" /> */}
+                            <Image source={HeaderImage} style={styles.headerImage} resizeMode="contain" />
                             <Image source={LogoImage} style={styles.logoImage} resizeMode="contain" />
                         </View>
                         <View style={styles.formContainer}>
@@ -138,7 +138,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',  
     },
     headerImage: {
-        width: 200,
+        width: 152,
+        height: 189,
     },
     logoImage: {
         width: 285,
