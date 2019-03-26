@@ -1,5 +1,5 @@
 import { observable } from "mobx"
-import { FullTheme, Colors } from 'react-native-elements'
+import { FullTheme, Colors, TextProps } from 'react-native-elements'
 import { Platform } from 'react-native'
 import { LinkButtonProps } from "../components";
 
@@ -7,7 +7,8 @@ export const primaryColor: string = '#1fbbe1'
 export const secondaryColor: string = '#072956'
 
 export interface AppTheme extends FullTheme {
-    LinkButton: Partial<LinkButtonProps>
+    LinkButton: Partial<LinkButtonProps>;
+    Label: Partial<TextProps>;
 }
 
 export interface AppColors extends Colors {}
@@ -19,7 +20,7 @@ export const colors = {
 
 export const typography = {
     primary: Platform.select({ ios: "OpenSans-Regular", android: "OpenSans-Regular" }),
-    secondary: Platform.select({ ios: "OpenSans-Regular", android: "OpenSans-Regular" }),
+    secondary: Platform.select({ ios: "OpenSans-SemiBold", android: "OpenSans-SemiBold" }),
     bold: Platform.select({ ios: "OpenSans-Bold", android: "OpenSans-Bold" }),
 }
 
@@ -60,8 +61,30 @@ export const theme: AppTheme = {
     Text: {
         h4Style: {
             color: '#fff',
+            fontFamily: typography.bold, // BUG: react-native-element overrides the propperty
             fontSize: 15,
+            fontWeight: 'normal',
+            fontStyle: 'normal',
+            ...Platform.select({
+                ios: {
+                    fontWeight: '600',
+                    fontStyle: 'normal',
+                },
+            }),
         },
+    },
+    Label: {
+        style: {
+            color: '#fff',
+            fontFamily: typography.bold,
+            fontSize: 15,
+            ...Platform.select({
+                ios: {
+                    fontWeight: '600',
+                    fontStyle: 'normal',
+                },
+            }),
+        }
     },
     LinkButton: {
         containerStyle: {

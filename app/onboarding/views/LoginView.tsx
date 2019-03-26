@@ -55,7 +55,7 @@ export class LoginView extends Component<LoginViewProps> {
     render() {
         const { authStore, themeStore } = this.props
         const { values, errors, inProgress } = authStore;
-        const { colors: { secondary } } = themeStore
+        const { colors: { secondary }, theme } = themeStore
 
         return (
             <ImageBackground source={BackgroundImage} style={styles.backgroundContainer}>
@@ -68,7 +68,7 @@ export class LoginView extends Component<LoginViewProps> {
                             <Image source={LogoImage} style={styles.logoImage} resizeMode="contain" />
                         </View>
                         <View style={styles.formContainer}>
-                            <Text h4 style={styles.formLabel}>Fan - Fueled Merchandising</Text>
+                            <Text style={[theme.Label.style, styles.formLabel]}>Fan - Fueled Merchandising</Text>
                             <Input
                                 placeholder='Email'
                                 value={values.email}
