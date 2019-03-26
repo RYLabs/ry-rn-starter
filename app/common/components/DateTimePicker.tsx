@@ -56,6 +56,7 @@ export class DateTimePicker extends Component<DateTimePickerProps> {
 
 const styles = StyleSheet.create({
     dropDownContiner: {
+        flex:1,
         flexDirection: 'column',
         borderRadius: 30,
         height: 60,
