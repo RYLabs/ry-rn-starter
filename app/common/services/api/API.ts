@@ -1,9 +1,8 @@
 import { ApisauceInstance, create, ApiResponse } from "apisauce"
-import { getGeneralApiProblem, getLoginApiProblem } from "./APIProblem"
+import { getGeneralApiProblem } from "./APIProblem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./APIConfig"
 import { Account } from "../../data"
 import * as Types from "./types"
-import { URL } from "url";
 
 enum Resource {
   Opportunities = 'opportunities',
@@ -84,7 +83,7 @@ export class Api {
     }
  
     const response: ApiResponse<any>  = await this.apisauce.post(Resource.Token, params)
-
+    console.log(response)
     if (!response.ok) {
       const problem = getLoginApiProblem(response)
       if (problem) return problem

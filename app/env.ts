@@ -1,3 +1,5 @@
+import Config from 'react-native-config'
+
 //
 // Load environment variables in.
 //
@@ -27,6 +29,6 @@ declare var process: any
 /**
  * Importing an environment variable.
  */
-export const API_ROOT_URL: string | undefined = process.env.API_ROOT_URL
-export const IMAGE_ROOT_URL: string | undefined = process.env.API_ROOT_URL
-export const STRIPE_CONNECT_URL: string | undefined = process.env.API_ROOT_URL
+export const API_ROOT_URL: string | undefined = Config.API_ROOT_URL
+export const IMAGE_ROOT_URL: string | undefined = Config.API_ROOT_URL
+export const STRIPE_CONNECT_URL: string | undefined = Config.API_ROOT_URL

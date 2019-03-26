@@ -1,20 +1,31 @@
 import { ApiResponse } from "apisauce"
+import { NativeSegmentedControlIOSChangeEvent } from "react-native";
 
-export type LoginApiProblem = {}
 
-export function getLoginApiProblem(response: ApiResponse<any>): LoginApiProblem | void {
-  return;
+export class GenericApiError extends Error {
+  title?: string;
+
+  constructor(title?: string, message?: string) {
+    super(message)
+    this.title = title
+  }
+}
+
+export interface GenericApiErrorResponse {
+  code?: number;
+  message?: string;
+  user?: boolean;
 }
 
 export type GeneralApiProblem =
   /**
    * Times up.
    */
-  | { kind: "timeout"; temporary: true }
+  | { kind: "timeout"; temporary: true; }
   /**
    * Cannot connect to the server for some reason.
    */
-  | { kind: "cannot-connect"; temporary: true }
+  | { kind: "cannot-connect"; temporary: true; }
   /**
    * The server experienced a problem. Any 5xx error.
    */
@@ -22,7 +33,7 @@ export type GeneralApiProblem =
   /**
    * We're not allowed because we haven't identified ourself. This is 401.
    */
-  | { kind: "unauthorized" }
+  | { kind: "unauthorized"; data: {}; }
   /**
    * We don't have access to perform that request. This is 403.
    */
@@ -64,7 +75,7 @@ export function getGeneralApiProblem(response: ApiResponse<any>): GeneralApiProb
     case "CLIENT_ERROR":
       switch (response.status) {
         case 401:
-          return { kind: "unauthorized" }
+          return { kind: "unauthorized", data: response.data.error }
         case 403:
           return { kind: "forbidden" }
         case 404:
