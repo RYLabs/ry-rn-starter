@@ -1,5 +1,4 @@
 import { ApiResponse } from "apisauce"
-import { NativeSegmentedControlIOSChangeEvent } from "react-native";
 
 
 export class GenericApiError extends Error {
