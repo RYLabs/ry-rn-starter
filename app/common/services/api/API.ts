@@ -1,8 +1,22 @@
 import { ApisauceInstance, create, ApiResponse } from "apisauce"
-import { getGeneralApiProblem } from "./APIProblem"
+import { getGeneralApiProblem, getLoginApiProblem } from "./APIProblem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./APIConfig"
 import { Account } from "../../data"
 import * as Types from "./types"
+import { URL } from "url";
+
+enum Resource {
+  Opportunities = 'opportunities',
+  Useropportunities = 'user_opportunities',
+  Stores = 'stores',
+  Token = 'token',
+  Account = 'account',
+}
+
+enum TokenParamName {
+  Email = 'email',
+  Password = 'password',
+}
 
 /**
  * Manages all requests to the API.
@@ -44,6 +58,41 @@ export class Api {
         Accept: "application/json",
       },
     })
+  }
+
+//   private func updateAccessToken(with json: Any) -> Bool {
+//   guard let jsonDict: [String: Any] = json as ?[String: Any], let token: String = jsonDict["token"] as ?String else { return false }
+
+//   NetworkManager.manager.adapter = AccessTokenAdapter(accessToken: token)
+//   NetworkManager.manager.retrier = AuthChecker()
+
+//   SAMKeychain.setPassword(token, forService: KeychainConstants.serviceName, account: KeychainConstants.accountName)
+
+//   return true
+// }
+    
+//     private func updateDoneTutorial(with json: Any) {
+//   guard let jsonDict: [String: Any] = json as ?[String: Any], let doneTutorial: Bool = jsonDict["completed_onboarding"] as ?Bool else { return }
+//   Defaults[.doneTutorial] = doneTutorial
+//   return
+// }
+
+  async login(email: string, password: string): Promise<Types.LoginResult> {
+    const params = {
+      [TokenParamName.Email]: email,
+      [TokenParamName.Password]: password,
+    }
+ 
+    const response: ApiResponse<any>  = await this.apisauce.post(Resource.Token, params)
+
+    if (!response.ok) {
+      const problem = getLoginApiProblem(response)
+      if (problem) return problem
+    }
+
+    const json = response.data
+
+    return json
   }
 
   /**

@@ -36,14 +36,16 @@ export class LoginView extends Component<LoginViewProps> {
     }
 
     handleSignIn = async () => {
+        console.log('login')
         const { navigation, authStore } = this.props
         await authStore.login()
-        const resetAction = StackActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'App' })],
-        });
+        console.log('login')
+        // const resetAction = StackActions.reset({
+        //     index: 0,
+        //     actions: [NavigationActions.navigate({ routeName: 'App' })],
+        // });
 
-        navigation.dispatch(resetAction);
+        // navigation.dispatch(resetAction);
     }
 
     render() {

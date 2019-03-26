@@ -1,13 +1,20 @@
 import { observable, action } from 'mobx';
+import { ErrorMessageConfig } from '../../utils/message';
+import { Api } from '../../services/api';
 
 export class AuthStore {
-    @observable inProgress = false;
-    @observable errors = undefined;
+    api = new Api();
 
+    @observable inProgress = false;
+    @observable errors: Array<ErrorMessageConfig> = [];
     @observable values = {
         email: '',
         password: '',
     };
+
+    constructor() {
+        this.api.setup()
+    }
 
     @action setEmail(email: string): void {
         this.values.email = email;
@@ -24,7 +31,8 @@ export class AuthStore {
 
     @action async login() {
         this.inProgress = true;
-        this.errors = undefined;
+        const result = await this.api.login(this.values.email, this.values.password)
+        // this.errors = undefined;
 
         return Promise.resolve()
     }

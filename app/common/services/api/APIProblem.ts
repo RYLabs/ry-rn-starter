@@ -1,5 +1,11 @@
 import { ApiResponse } from "apisauce"
 
+export type LoginApiProblem = {}
+
+export function getLoginApiProblem(response: ApiResponse<any>): LoginApiProblem | void {
+  return;
+}
+
 export type GeneralApiProblem =
   /**
    * Times up.
