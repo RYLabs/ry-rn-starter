@@ -3,14 +3,14 @@ export interface Account {
     lastName: string
     email: string
     password?: string
-    dob?: string
+    dob?: Date | void | null
     maximumOpps?: number
     status?: Status
     statusMessage?: any
     id?: number
     rating?: number
-    stripeConnected: boolean
-    completedOnboarding: boolean
+    stripeConnected?: boolean
+    completedOnboarding?: boolean
     pendingOpps?: number
 }
 

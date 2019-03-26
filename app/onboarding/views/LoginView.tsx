@@ -37,7 +37,7 @@ export class LoginView extends Component<LoginViewProps> {
         this.props.authStore.reset();
     }
 
-    handleSignIn = async () => {
+    _handleSignIn = async () => {
         const { navigation, authStore } = this.props
 
         try {
@@ -50,6 +50,10 @@ export class LoginView extends Component<LoginViewProps> {
         } catch(e) {
             Alert.alert(e.title, e.message)
         }
+    }
+
+    _hanldeSignUp = () => {
+        this.props.navigation.navigate('Register')
     }
 
     render() {
@@ -84,10 +88,10 @@ export class LoginView extends Component<LoginViewProps> {
                             />
                             <Button title="Log In"
                                 containerStyle={styles.logInButtonContainer}
-                                onPress={this.handleSignIn} />
+                                onPress={this._handleSignIn} />
                         </View>
                         <View style={styles.footerContainer}>
-                            <LinkButton title="Sign Up" containerStyle={styles.linkButton} onPress={() => { }} />
+                            <LinkButton title="Sign Up" containerStyle={styles.linkButton} onPress={this._hanldeSignUp} />
                             <LinkButton title="Forgot Password?" onPress={() => { }} />
                         </View>
                     </KeyboardAwareScrollView>

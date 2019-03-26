@@ -1,6 +1,10 @@
-import { observable, action } from 'mobx';
-import { Api } from '../../services/api';
+import { observable, action } from 'mobx'
+import moment from 'moment'
+import { Api } from '../../services/api'
 import { GenericApiErrorResponse, GenericApiError } from '../../services/api/APIProblem'
+import { Account } from '../Account'
+
+const defaultDob: Date | void = undefined
 
 enum AccountStatus {
     AccountLocked = 40101,
@@ -15,26 +19,70 @@ export class AuthStore {
     @observable values = {
         email: '',
         password: '',
-    };
+        firstName: '',
+        lastName: '',
+        dob: defaultDob,
+    }
 
     constructor() {
         this.api.setup()
     }
 
     @action setEmail(email: string): void {
-        this.values.email = email;
+        this.values.email = email
     }
 
     @action setPassword(password: string): void {
-        this.values.password = password;
+        this.values.password = password
+    }
+
+    @action setFirstName(firstName: string): void {
+        this.values.firstName = firstName
+    }
+
+    @action setLastName(lastName: string): void {
+        this.values.lastName = lastName
+    }
+
+    @action setDob(dob: Date | void): void {
+        this.values.dob = dob
     }
 
     @action reset() : void {
-        this.values.email = '';
-        this.values.password = '';
+        this.values.email = ''
+        this.values.password = ''
+        this.values.firstName = ''
+        this.values.lastName = ''
+        this.values.dob = undefined
     }
 
+    @action async signUp() {
+        // TODO: Validation
+        this.inProgress = true
+        const { firstName, lastName, email, dob } = this.values
+        const accountData: Account = {
+            firstName,
+            lastName,
+            email,
+            dob,
+        }
+        const response = await this.api.register(accountData)
+        this.inProgress = false
+
+        let errorTitle = 'Registeration Failed'
+        let errorMessage = ''
+
+       if(response.kind === 'ok') {
+           return;
+       } else {
+           errorMessage = 'Unexpected error'
+       }
+       
+       throw new GenericApiError(errorTitle, errorMessage)
+    }
+    
     @action async login() {
+        // TODO: Validation
         this.inProgress = true
         const response = await this.api.login(this.values.email, this.values.password)
         this.inProgress = false
@@ -43,7 +91,6 @@ export class AuthStore {
         let errorMessage = ''
 
         if (response.kind === 'ok') {
-            console.log(response.account)
             return response.account
         } else if(response.kind === 'unauthorized') {
             const { user = false, code = -1 } = response.data as GenericApiErrorResponse

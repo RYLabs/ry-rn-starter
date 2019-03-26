@@ -1,5 +1,5 @@
 import { ApisauceInstance, create, ApiResponse } from "apisauce"
-import { getGeneralApiProblem } from "./APIProblem"
+import { getGeneralApiProblem, GeneralApiProblem } from "./APIProblem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./APIConfig"
 import { Account } from "../../data"
 import * as Types from "./types"
@@ -14,6 +14,14 @@ enum Resource {
   Stores = 'stores',
   Token = 'token',
   Account = 'account',
+}
+
+enum AccountParamName {
+  Email = "email",
+  Password = "password",
+  FirstName = "first_name",
+  LastName = "last_name",
+  Dob = "date_of_birth",
 }
 
 enum TokenParamName {
@@ -78,6 +86,36 @@ export class Api {
     await save(StoragesKeys.DoneTutorial, doneTutorial)
 
     return;
+  }
+
+  async register(accountData: Account): Promise<Types.GetAccoutResult> {
+    const { password , dob } = accountData
+    if (!dob) return { kind: "bad-data" }
+
+    const params = {
+      [AccountParamName.Email]: accountData.email,
+      [AccountParamName.Password]: password,
+      [AccountParamName.FirstName]: accountData.firstName,
+      [AccountParamName.LastName]: accountData.lastName,
+      [AccountParamName.Dob]: dob,
+    }
+
+    const response: ApiResponse<any> = await this.apisauce.post(Resource.Account, params)
+
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    try {
+      // await this.updateDoneTutorial(json)
+      // await saveString(StoragesKeys.Email, email)
+      // await this.updateAccessToken(email, json)
+
+      return { kind: "ok", account: accountData }
+    } catch {
+      return { kind: "bad-data" }
+    }
   }
 
   async login(email: string, password: string): Promise<Types.GetAccoutResult> {
