@@ -78,6 +78,7 @@ export class LoginView extends Component<LoginViewProps> {
                             <Input
                                 placeholder='Password'
                                 value={values.password}
+                                secureTextEntry={true}
                                 containerStyle={styles.formInput}
                                 onChangeText={text => authStore.setPassword(text)}
                             />

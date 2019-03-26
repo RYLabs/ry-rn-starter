@@ -6,6 +6,7 @@ import * as Types from "./types"
 import { save, clear, saveString } from "../../utils/storage";
 import { StoragesKeys, KeychainConstants } from "../../utils/constants";
 import { setPassword, deletePassword } from "../../utils/keychain";
+import { decodeAccount } from "../../data/decoder";
 
 enum Resource {
   Opportunities = 'opportunities',
@@ -54,7 +55,7 @@ export class Api {
   setup() {
     // construct the apisauce instance
     this.apisauce = create({
-      baseURL: this.config.url,
+      baseURL: 'https://api.othrsource.com/api' /*this.config.url*/,
       timeout: this.config.timeout,
       headers: {
         Accept: "application/json",
@@ -79,26 +80,31 @@ export class Api {
     return;
   }
 
-  async login(email: string, password: string): Promise<Types.LoginResult> {
+  async login(email: string, password: string): Promise<Types.GetAccoutResult> {
     const params = {
       [TokenParamName.Email]: email,
       [TokenParamName.Password]: password,
     }
  
     const response: ApiResponse<any>  = await this.apisauce.post(Resource.Token, params)
-    console.log(response)
+
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
       if (problem) return problem
     }
 
-    const json = response.data
+    try {
+      const json = response.data
 
-    await this.updateDoneTutorial(json)
-    await saveString(StoragesKeys.Email, email)
-    await this.updateAccessToken(email, json)
+      // await this.updateDoneTutorial(json)
+      // await saveString(StoragesKeys.Email, email)
+      // await this.updateAccessToken(email, json)
 
-    return json
+      return { kind: 'ok', account: decodeAccount(json) }
+    } catch {
+      return { kind: "bad-data" }
+    }
+    
   }
 
   async logout() {
@@ -122,14 +128,9 @@ export class Api {
 
     // transform the data into the format we are expecting
     try {
-      const result: Account = {
-        firstName: response.data.firstName,
-        lastName: response.data.lastName,
-        email: response.data.email,
-        stripeConnected: response.data.stripeConnected || false,
-        completedOnboarding: response.data.completedOnboarding || false
-      }
-      return { kind: "ok", account: result }
+      const json = response.data
+
+      return { kind: "ok", account: decodeAccount(json) }
     } catch {
       return { kind: "bad-data" }
     }

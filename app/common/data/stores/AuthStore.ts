@@ -35,13 +35,16 @@ export class AuthStore {
     }
 
     @action async login() {
-        this.inProgress = true;
+        this.inProgress = true
         const response = await this.api.login(this.values.email, this.values.password)
+        this.inProgress = false
+
         let errorTitle = 'Login Failed'
         let errorMessage = ''
 
         if (response.kind === 'ok') {
-            return Promise.resolve()
+            console.log(response.account)
+            return response.account
         } else if(response.kind === 'unauthorized') {
             const { user = false, code = -1 } = response.data as GenericApiErrorResponse
 
@@ -63,7 +66,14 @@ export class AuthStore {
         throw new GenericApiError(errorTitle, errorMessage)
     }
 
-    @action logout() {
-        return Promise.resolve()
+    @action async logout() {
+        try {
+            this.inProgress = true
+            await this.api.logout()
+            this.inProgress = false
+            return;
+        } catch(e) {
+            throw new GenericApiError('Logout Failed', 'Unexpected error')
+        }
     }
 }
