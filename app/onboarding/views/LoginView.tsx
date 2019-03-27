@@ -56,6 +56,10 @@ export class LoginView extends Component<LoginViewProps> {
         this.props.navigation.navigate('Register')
     }
 
+    _handleForgotPassword = () => {
+        this.props.navigation.navigate('ForgotPassword')
+    }
+
     render() {
         const { authStore, themeStore } = this.props
         const { values, errors, inProgress } = authStore;
@@ -102,7 +106,7 @@ export class LoginView extends Component<LoginViewProps> {
                         </View>
                         <View style={styles.footerContainer}>
                             <LinkButton title="Sign Up" containerStyle={styles.linkButton} onPress={this._hanldeSignUp} />
-                            <LinkButton title="Forgot Password?" onPress={() => { }} />
+                        <LinkButton title="Forgot Password?" onPress={this._handleForgotPassword} />
                         </View>
                     </KeyboardAwareScrollView>
                 </ImageBackground>

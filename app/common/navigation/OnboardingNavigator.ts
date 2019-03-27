@@ -1,5 +1,5 @@
 import { createStackNavigator } from "react-navigation"
-import { LoginView, RegisterView } from "../../onboarding"
+import { LoginView, RegisterView, ForgotPasswordView } from "../../onboarding"
 import { typography } from '../theme'
 
 export const OnboardingNavigator = createStackNavigator({
@@ -15,6 +15,13 @@ export const OnboardingNavigator = createStackNavigator({
             title: 'Sign Up',
         }
     },
+
+    ForgotPassword: {
+        screen: ForgotPasswordView,
+        navigationOptions: {
+            title: 'Forgot Password',
+        }
+    }
 },
 {
     initialRouteName: "Login",
