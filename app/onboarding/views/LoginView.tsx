@@ -76,15 +76,25 @@ export class LoginView extends Component<LoginViewProps> {
                             <Input
                                 placeholder='Email'
                                 value={values.email}
-                                containerStyle={styles.formInput}
+                                errorMessage={errors.email}
+                                containerStyle={StyleSheet.flatten([
+                                    styles.formInput,
+                                    { backgroundColor: errors.email ? theme.colors.error : 'transparent' }
+                                ])}
                                 onChangeText={text => authStore.setEmail(text)}
+                                onBlur={() => authStore.validateEmail()}
                             />
                             <Input
                                 placeholder='Password'
                                 value={values.password}
                                 secureTextEntry={true}
-                                containerStyle={styles.formInput}
+                                errorMessage={errors.password}
+                                containerStyle={StyleSheet.flatten([
+                                    styles.formInput,
+                                    { backgroundColor: errors.email ? theme.colors.error : 'transparent' }
+                                ])}
                                 onChangeText={text => authStore.setPassword(text)}
+                                onBlur={() => authStore.validatePassword()}
                             />
                             <Button title="Log In"
                                 containerStyle={styles.logInButtonContainer}
