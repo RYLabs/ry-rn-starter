@@ -5,6 +5,7 @@ import { LinkButtonProps } from "../components";
 
 export const primaryColor: string = '#1fbbe1'
 export const secondaryColor: string = '#072956'
+export const errorColor: string = '#EE5C48'
 
 export interface AppTheme extends FullTheme {
     LinkButton: Partial<LinkButtonProps>;
@@ -16,6 +17,7 @@ export interface AppColors extends Colors {}
 export const colors = {
     primary: primaryColor,
     secondary: secondaryColor,
+    error: errorColor,
 }
 
 export const typography = {
@@ -27,6 +29,11 @@ export const typography = {
 export const theme: AppTheme = {
     colors: colors,
     Input: {
+        containerStyle: {
+            borderRadius: 5,
+            paddingVertical: 2,
+            paddingHorizontal: 2,
+        },
         inputContainerStyle: {
             borderRadius: 5,
             borderBottomWidth: 0,
@@ -34,7 +41,10 @@ export const theme: AppTheme = {
         },
         labelStyle: {
             fontFamily: typography.primary,
-        }
+        },
+        errorStyle: {
+            color: '#fff'
+        },
     },
     Button: {
         raised: true,

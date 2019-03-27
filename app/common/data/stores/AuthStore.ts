@@ -3,6 +3,7 @@ import moment from 'moment'
 import { Api } from '../../services/api'
 import { GenericApiErrorResponse, GenericApiError } from '../../services/api/APIProblem'
 import { Account } from '../Account'
+import validator from 'validator'
 
 const defaultDob: Date | void = undefined
 
@@ -15,7 +16,10 @@ export class AuthStore {
     api = new Api();
 
     @observable inProgress = false;
-    @observable errors = [];
+    @observable errors = {
+        email: '',
+        password: ''
+    };
     @observable values = {
         email: '',
         password: '',
@@ -32,8 +36,32 @@ export class AuthStore {
         this.values.email = email
     }
 
+    @action validateEmail(): boolean {
+        const { email } = this.values
+
+        if (!validator.isEmail(email)) {
+            this.errors.email = 'Invalid email address'
+            return false
+        }
+
+        this.errors.email = ''
+        return true
+    }
+
     @action setPassword(password: string): void {
         this.values.password = password
+    }
+
+    @action validatePassword(): boolean {
+        const { password } = this.values
+
+        if (!validator.isLength(password, {min: 8})) {
+            this.errors.password = 'Password must be a least 8 characters'
+            return false
+        }
+
+        this.errors.password = ''
+        return true
     }
 
     @action setFirstName(firstName: string): void {
@@ -48,6 +76,10 @@ export class AuthStore {
         this.values.dob = dob
     }
 
+    @action isValid(): boolean {
+        return this.validateEmail() && this.validatePassword()
+    }
+
     @action reset() : void {
         this.values.email = ''
         this.values.password = ''
@@ -57,7 +89,8 @@ export class AuthStore {
     }
 
     @action async signUp() {
-        // TODO: Validation
+        if(!this.isValid()) return;
+
         this.inProgress = true
         const { firstName, lastName, email, dob } = this.values
         const accountData: Account = {
@@ -82,7 +115,8 @@ export class AuthStore {
     }
     
     @action async login() {
-        // TODO: Validation
+        if (!this.isValid()) return;
+
         this.inProgress = true
         const response = await this.api.login(this.values.email, this.values.password)
         this.inProgress = false

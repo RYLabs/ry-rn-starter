@@ -14,7 +14,7 @@ import { AuthStore } from '../../common/data/stores'
 import { ThemeStore } from '../../common/theme'
 
 import BackgroundImage from '../assets/images/background.png'
-import { NavigationActions, StackActions } from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation'
 
 
 const { width, height } = Dimensions.get('window')
@@ -53,6 +53,9 @@ export class RegisterView extends Component<RegisterViewProps> {
         const { values, errors, inProgress } = authStore;
         const { colors: { secondary }, theme } = themeStore
 
+        console.log(errors.email)
+        console.log(errors.password)
+
         return (
             <ImageBackground source={BackgroundImage} style={styles.backgroundContainer}>
                 <View style={[styles.overlay, { backgroundColor: secondary }]} />
@@ -75,17 +78,27 @@ export class RegisterView extends Component<RegisterViewProps> {
                         <Input
                             placeholder='Email'
                             value={values.email}
-                            containerStyle={styles.formInput}
+                            errorMessage={errors.email}
+                            containerStyle={StyleSheet.flatten([
+                                styles.formInput, 
+                                { backgroundColor: errors.email ? theme.colors.error : 'transparent' }
+                            ])}
                             onChangeText={text => authStore.setEmail(text)}
+                            onBlur={() => authStore.validateEmail()}
                         />
                         <View style={styles.formInputContainer}>
                             <Input
                                 placeholder='Password'
                                 value={values.password}
                                 secureTextEntry={true}
-                                onChangeText={text => authStore.setPassword(text)}
+                                errorMessage={errors.password}
+                                containerStyle={{ backgroundColor: errors.password ? theme.colors.error : 'transparent'}}
+                                onChangeText={ text => authStore.setPassword(text) }
+                                onBlur={ () => authStore.validatePassword() }
                             />
-                            <Text style={[theme.Label.style, styles.formLabel]}>Password must me at least 8 characters</Text>
+                            {!errors.password &&
+                                <Text style={[theme.Label.style, styles.formLabel]}>Password must me at least 8 characters</Text>
+                            }
                         </View>
                         <View style={styles.formInputContainer}>
                             <DateTimePicker placeholder="Date of Birth"
@@ -118,7 +131,7 @@ const styles = StyleSheet.create({
     formContainer: {
         paddingTop: 60,
         paddingBottom: 40,
-        paddingHorizontal: 40,
+        paddingHorizontal: 60,
         width: '100%',
         height: 'auto',
         justifyContent: 'center',
@@ -134,6 +147,9 @@ const styles = StyleSheet.create({
     },
     formInput: {
         marginBottom: 40,
+    },
+    formInputError: {
+
     },
     logInButtonContainer: {
         marginTop: 20,

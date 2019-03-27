@@ -2,14 +2,19 @@ import React, { Component } from 'react'
 import { TouchableOpacity, View, StyleSheet, ViewStyle, TextStyle } from 'react-native'
 import DatePicker from 'react-native-modal-datetime-picker'
 import moment from 'moment'
-import { Text, Icon } from 'react-native-elements'
-import { typography, theme } from '../theme';
+import { Text, Icon, TextProps } from 'react-native-elements'
+import { theme } from '../theme';
+
+const maximumDate = moment().subtract(8, 'years').toDate();
 
 export interface DateTimePickerProps {
     placeholder?: string;
     value?: Date | void;
+    errorMessage?: string;
     style?: ViewStyle;
     textStyle?: TextStyle;
+    errorStyle?: TextStyle;
+    errorProps?: TextProps;
     onChangeDate?: (date?: Date) => void;
 }
 
@@ -30,7 +35,7 @@ export class DateTimePicker extends Component<DateTimePickerProps> {
 
     render() {
 
-        const { placeholder, value, style } = this.props
+        const { placeholder, value, style, errorMessage, errorStyle, errorProps } = this.props
 
         return (
             <View style={[styles.container, style]}>
@@ -44,8 +49,20 @@ export class DateTimePicker extends Component<DateTimePickerProps> {
                         }
                         <Icon name="expand-more" type="material" color="rgba(0,0,0,0.6)" size={40} />
                     </View>
+                    {!!errorMessage && (
+                        <Text
+                            {...errorProps}
+                            style={[
+                                styles.error,
+                                errorStyle && errorStyle,
+                            ]}
+                        >
+                            {errorMessage}
+                        </Text>
+                    )}
                 </TouchableOpacity>
                 <DatePicker
+                    maximumDate={maximumDate}
                     isVisible={this.state.isDateTimePickerVisible}
                     onConfirm={this._handleDateChange}
                     onCancel={this._hideDateTimePicker}
@@ -60,13 +77,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
-        paddingHorizontal: 5,
+        borderRadius: 5,
+        paddingVertical: 2,
+        paddingHorizontal: 2,
         justifyContent: 'center',
     },
     dropDownContiner: {
-        flex:1,
+        flex: 1,
         flexDirection: 'row',
-        marginLeft: 5,
         borderRadius: 5,
         minHeight: 50,
         paddingHorizontal: 4,
@@ -85,5 +103,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         flex: 1,
         maxHeight: 30,
+    },
+    error: {
+        margin: 5,
+        fontSize: 12,
+        color: theme.colors.error,
     },
 })

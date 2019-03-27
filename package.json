@@ -33,7 +33,8 @@
     "react-native-vector-icons": "^6.4.1",
     "react-navigation": "3.0.0",
     "react-navigation-mobx-helpers": "^2.0.1",
-    "validate.js": "^0.12.0"
+    "validate.js": "^0.12.0",
+    "validator": "^10.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
