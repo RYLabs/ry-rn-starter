@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { TouchableOpacity, View, StyleSheet, ViewStyle, TextStyle } from 'react-native'
 import DatePicker from 'react-native-modal-datetime-picker'
 import moment from 'moment'
-import { Text } from 'react-native-elements';
+import { Text, Icon } from 'react-native-elements'
+import { typography, theme } from '../theme';
 
 export interface DateTimePickerProps {
     placeholder?: string;
@@ -29,18 +30,19 @@ export class DateTimePicker extends Component<DateTimePickerProps> {
 
     render() {
 
-        const { placeholder, value, } = this.props;
+        const { placeholder, value, style } = this.props
 
         return (
-            <View style={{ flex: 1 }}>
+            <View style={[styles.container, style]}>
                 <TouchableOpacity onPress={this._showDateTimePicker}>
                     <View style={styles.dropDownContiner}>
                         {value &&
-                            <Text>{moment(value).format('MM/DD/YY')}</Text>
+                            <Text style={styles.valueLabel}>{moment(value).format('MM/DD/YY')}</Text>
                         }
                         {!value &&
-                            <Text>{placeholder}</Text>
+                            <Text style={styles.label}>{placeholder}</Text>
                         }
+                        <Icon name="expand-more" type="material" color="rgba(0,0,0,0.6)" size={40} />
                     </View>
                 </TouchableOpacity>
                 <DatePicker
@@ -55,10 +57,33 @@ export class DateTimePicker extends Component<DateTimePickerProps> {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        width: '100%',
+        paddingHorizontal: 5,
+        justifyContent: 'center',
+    },
     dropDownContiner: {
         flex:1,
-        flexDirection: 'column',
-        borderRadius: 30,
-        height: 60,
-    }
+        flexDirection: 'row',
+        marginLeft: 5,
+        borderRadius: 5,
+        minHeight: 50,
+        paddingHorizontal: 4,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    label: {
+        color: '#86939e',
+        fontSize: 18,
+        flex: 1,
+        maxHeight: 30,
+    },
+    valueLabel: {
+        color: 'black',
+        fontSize: 18,
+        flex: 1,
+        maxHeight: 30,
+    },
 })

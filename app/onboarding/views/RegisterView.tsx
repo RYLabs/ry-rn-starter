@@ -7,7 +7,7 @@ import {
     Alert
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
-import { Input, Button } from 'react-native-elements'
+import { Input, Button, Text } from 'react-native-elements'
 import { inject, observer } from 'mobx-react'
 import { DateTimePicker } from '../../common/components/DateTimePicker'
 import { AuthStore } from '../../common/data/stores'
@@ -51,7 +51,7 @@ export class RegisterView extends Component<RegisterViewProps> {
     render() {
         const { authStore, themeStore } = this.props
         const { values, errors, inProgress } = authStore;
-        const { colors: { secondary } } = themeStore
+        const { colors: { secondary }, theme } = themeStore
 
         return (
             <ImageBackground source={BackgroundImage} style={styles.backgroundContainer}>
@@ -78,17 +78,22 @@ export class RegisterView extends Component<RegisterViewProps> {
                             containerStyle={styles.formInput}
                             onChangeText={text => authStore.setEmail(text)}
                         />
-                        <Input
-                            placeholder='Password'
-                            value={values.password}
-                            secureTextEntry={true}
-                            containerStyle={styles.formInput}
-                            onChangeText={text => authStore.setPassword(text)}
-                        />
-                        <DateTimePicker placeholder="Date of Birth"
-                                        value={values.dob}
-                                        onChangeDate={date => authStore.setDob(date)}
-                        />
+                        <View style={styles.formInputContainer}>
+                            <Input
+                                placeholder='Password'
+                                value={values.password}
+                                secureTextEntry={true}
+                                onChangeText={text => authStore.setPassword(text)}
+                            />
+                            <Text style={[theme.Label.style, styles.formLabel]}>Password must me at least 8 characters</Text>
+                        </View>
+                        <View style={styles.formInputContainer}>
+                            <DateTimePicker placeholder="Date of Birth"
+                                value={values.dob}
+                                onChangeDate={date => authStore.setDob(date)}
+                            />
+                            <Text style={[theme.Label.style, styles.formLabel]}>You must me 18 years or older to use OTHRsource</Text>
+                        </View>
                         <Button title="Submit"
                             containerStyle={styles.logInButtonContainer}
                             onPress={this.handleSignUp} />
@@ -111,7 +116,7 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     formContainer: {
-        paddingTop: 20,
+        paddingTop: 60,
         paddingBottom: 40,
         paddingHorizontal: 40,
         width: '100%',
@@ -120,13 +125,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     formLabel: {
-        marginBottom: 10,
+        paddingHorizontal: 10,
+        marginTop: 10,
+    },
+    formInputContainer: {
+        width: '100%',
+        marginBottom: 40,
     },
     formInput: {
         marginBottom: 40,
     },
     logInButtonContainer: {
-        marginTop: 40,
+        marginTop: 20,
         width: '75%',
     },
     overlay: {

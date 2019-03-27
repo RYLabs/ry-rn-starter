@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     backgroundContainer: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#FFF',
+        backgroundColor: '#ff0000',
     },
     scrollViewContainer: {
         flex: 1,
