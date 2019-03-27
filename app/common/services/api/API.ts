@@ -3,10 +3,10 @@ import { getGeneralApiProblem, GeneralApiProblem } from "./APIProblem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./APIConfig"
 import { Account } from "../../data"
 import * as Types from "./types"
-import { save, clear, saveString } from "../../utils/storage";
-import { StoragesKeys, KeychainConstants } from "../../utils/constants";
-import { setPassword, deletePassword } from "../../utils/keychain";
-import { decodeAccount } from "../../data/decoder";
+import { save, clear, saveString } from "../../utils/storage"
+import { StoragesKeys, KeychainConstants } from "../../utils/constants"
+import { setPassword, deletePassword } from "../../utils/keychain"
+import { decodeAccount } from "../../data/decoder"
 
 enum Resource {
   Opportunities = 'opportunities',
@@ -91,7 +91,7 @@ export class Api {
   async register(accountData: Account): Promise<Types.GetAccoutResult> {
     const { password , dob } = accountData
     if (!dob) return { kind: "bad-data" }
-
+    console.log(dob)
     const params = {
       [AccountParamName.Email]: accountData.email,
       [AccountParamName.Password]: password,
@@ -101,7 +101,7 @@ export class Api {
     }
 
     const response: ApiResponse<any> = await this.apisauce.post(Resource.Account, params)
-
+    console.log(response)
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
       if (problem) return problem

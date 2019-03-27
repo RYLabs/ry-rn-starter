@@ -1,9 +1,9 @@
 import { observable, action } from 'mobx'
-import moment from 'moment'
 import { Api } from '../../services/api'
 import { GenericApiErrorResponse, GenericApiError } from '../../services/api/APIProblem'
 import { Account } from '../Account'
 import validator from 'validator'
+import { ErrorMessages } from '../../utils/constants'
 
 const defaultDob: Date | void = undefined
 
@@ -89,15 +89,18 @@ export class AuthStore {
     }
 
     @action async signUp() {
-        if(!this.isValid()) return;
+        if(!this.isValid()) {
+            throw new GenericApiError(ErrorMessages.DefaultTitle, ErrorMessages.TryAgainMessage)
+        }
 
         this.inProgress = true
-        const { firstName, lastName, email, dob } = this.values
+        const { firstName, lastName, password, email, dob } = this.values
         const accountData: Account = {
             firstName,
             lastName,
             email,
             dob,
+            password,
         }
         const response = await this.api.register(accountData)
         this.inProgress = false
@@ -115,10 +118,13 @@ export class AuthStore {
     }
     
     @action async login() {
-        if (!this.isValid()) return;
+        if (!this.isValid()) {
+            throw new GenericApiError(ErrorMessages.DefaultTitle, ErrorMessages.TryAgainMessage)
+        }
 
         this.inProgress = true
         const response = await this.api.login(this.values.email, this.values.password)
+        console.log(response)
         this.inProgress = false
 
         let errorTitle = 'Login Failed'
@@ -154,7 +160,7 @@ export class AuthStore {
             this.inProgress = false
             return;
         } catch(e) {
-            throw new GenericApiError('Logout Failed', 'Unexpected error')
+            throw new GenericApiError(ErrorMessages.DefaultTitle, ErrorMessages.TryAgainMessage)
         }
     }
 }

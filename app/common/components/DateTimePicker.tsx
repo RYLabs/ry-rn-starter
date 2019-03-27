@@ -5,7 +5,7 @@ import moment from 'moment'
 import { Text, Icon, TextProps } from 'react-native-elements'
 import { theme } from '../theme';
 
-const maximumDate = moment().subtract(8, 'years').toDate();
+const maximumDate = moment().subtract(18, 'years').toDate();
 
 export interface DateTimePickerProps {
     placeholder?: string;

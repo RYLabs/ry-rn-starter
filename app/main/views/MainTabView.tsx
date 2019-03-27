@@ -19,7 +19,7 @@ export class MainTabView extends Component<Props> {
         await authStore.logout()
         const resetAction = StackActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'Login' })],
+            actions: [NavigationActions.navigate({ routeName: 'OnBoarding' })],
         });
 
         navigation.dispatch(resetAction);

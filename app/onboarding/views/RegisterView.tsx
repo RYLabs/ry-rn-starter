@@ -33,7 +33,7 @@ export class RegisterView extends Component<RegisterViewProps> {
         this.props.authStore.reset();
     }
 
-    handleSignUp = async () => {
+    _handleSignUp = async () => {
         const { navigation, authStore } = this.props
 
         try {
@@ -109,7 +109,7 @@ export class RegisterView extends Component<RegisterViewProps> {
                         </View>
                         <Button title="Submit"
                             containerStyle={styles.logInButtonContainer}
-                            onPress={this.handleSignUp} />
+                            onPress={this._handleSignUp} />
                     </View>
                 </KeyboardAwareScrollView>
             </ImageBackground>
