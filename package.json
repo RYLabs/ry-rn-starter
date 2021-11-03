@@ -34,7 +34,7 @@
     "react-navigation": "3.0.0",
     "react-navigation-mobx-helpers": "^2.0.1",
     "validate.js": "^0.12.0",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
